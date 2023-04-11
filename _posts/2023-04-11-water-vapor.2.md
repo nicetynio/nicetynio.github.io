@@ -93,7 +93,9 @@ adv  "g/(m2-s)"
 
 要得到进一步的结果    adv要除以 /rho
 
+/rho = 1000 kg/m3
 
+g/(m2-s)   m3/1000kg   =>  mm/s  1/1000  =>  24×60×60  mm/day  1/1000
 
 ```
 adv=vibeta(level,mfc_adv(time|:,lat|:,lon|:,plev|:),1,p,100000.0,10000.0)/g
