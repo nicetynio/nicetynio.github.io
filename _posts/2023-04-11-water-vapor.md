@@ -120,7 +120,7 @@ v  m/s
 
 q  g/kg
 
-ps pa => N/m2   kg m/s2/m2 => kg/(m s2)
+ps pa => N/m2 => kg m/s2/m2 => kg/(m s2)
 
 ```
 ;---Layer thickness: ; Pa=>[kg/(m-s2)], (time,level,lat,lon) 
@@ -162,7 +162,10 @@ dpg的单位是   kg/(m s2) s2/m =>  kg/m2
   printVarSummary(mfc_adv)  
   printMinMax(mfc_adv, 0)  
   print("--------")
+```
+mfc_adv还没有进行整层积分
 
+```
 ;************************************************
 ; Calculate the MFC_convergence term
 ;   MFC_conv   = -q*((du/dx)+(dv/dy) )      ; con(div)-vergence
@@ -175,7 +178,10 @@ dpg的单位是   kg/(m s2) s2/m =>  kg/m2
   mfc_con@units     = "g/(kg-s)"  ; (g/kg)(1/s) => g/(kg-s)
   copy_VarCoords(duv,mfc_con)
   delete(duv)
+```
+mfc_con同样还没有进行整层积分
 
+```
 ;************************************************
 ; Calculate the total MFC
 ;*************************************************    
@@ -207,7 +213,15 @@ if (PRINT_RAW) then
   print(dp(nt,:,{40},{255}))    ; Boulder, CO 
   print("-----")
 end if
+```
 
+下面的单位换算涉及积分
+
+dim_sum_n: Computes the arithmetic sum of a variable's given dimension(s) at all other dimensions.
+
+1代表 第二维  lev    也就是一个气压层高的加权和
+
+```
 ;---Integrated mass weighted moisture flux components
 
   mfc_adv_dpg = mfc_adv*dpg                ; mass weighted 'uq'; [m/s][g/kg][kg/m2]=>[m/s][g/kg]
