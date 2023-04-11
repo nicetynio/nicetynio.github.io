@@ -115,9 +115,12 @@ end if
 经过处理后各变量单位
 
 u  m/s
+
 v  m/s
+
 q  g/kg
-ps pa => N/m2   kg*m/s2/m2 => kg/(m*s2)
+
+ps pa => N/m2   kg m/s2/m2 => kg/(m s2)
 
 ```
 ;---Layer thickness: ; Pa=>[kg/(m-s2)], (time,level,lat,lon) 
@@ -125,6 +128,7 @@ ps pa => N/m2   kg*m/s2/m2 => kg/(m*s2)
 ;---Reference: http://www.cgd.ucar.edu/cas/catalog/newbudgets/
 ```
 dpres_plevel_Wrap:  Calculates the pressure layer thicknesses of a constant pressure level coordinate system.
+
 计算气压层的厚度
 
 ```
@@ -136,7 +140,8 @@ dpres_plevel_Wrap:  Calculates the pressure layer thicknesses of a constant pres
 ```
 
 g    = 9.80665          ; m/s2
-dpg的单位是   kg/(m*s2)* s2/m =>  kg/m2
+
+dpg的单位是   kg/(m s2) s2/m =>  kg/m2
 
 ```
 ;************************************************
