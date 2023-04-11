@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 根据行政区划mask数据
-categories: python ncl
-tags: mask
+title: 水汽收支方程
+categories: ncl
+tags: 水汽
 author: nicetynio
 ---
 
