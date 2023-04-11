@@ -44,7 +44,9 @@ ncl官网提供了两种计算水汽收支的方法，现介绍第二种
 ;   NCEP Reanalysis data provided by the NOAA/OAR/ESRL PSD, Boulder, Colorado, USA, 
 ;   from their Web site at https://www.esrl.noaa.gov/psd/
 ;===================================================================
+```
 
+```
   ptop = 300              ; 'shum' upper level                  
   ptop@units = "hPa"
   g    = 9.80665          ; m/s2
@@ -109,17 +111,34 @@ end if
   v    = v(:,:,::-1,:)
   q    = q(:,:,::-1,:)     
   ps   =ps(:,  ::-1,:)       
+```
+经过处理后各变量单位
 
+u  m/s
+v  m/s
+q  g/kg
+ps pa => N/m2   kg*m/s2/m2 => kg/(m*s2)
+
+```
 ;---Layer thickness: ; Pa=>[kg/(m-s2)], (time,level,lat,lon) 
 ;---Mass weighting:  (dp/g) => [Pa/(m/s2)] => (Pa-s2)/m => [kg/(m-s2)][s2/m] =>  (kg/m2)
 ;---Reference: http://www.cgd.ucar.edu/cas/catalog/newbudgets/
+```
+dpres_plevel_Wrap:  Calculates the pressure layer thicknesses of a constant pressure level coordinate system.
+计算气压层的厚度
 
+```
   dp   = dpres_plevel_Wrap(plev, ps, ptop, 0) ; Pa; layar thickness 
 
   dpg  = dp/g    
   dpg@long_name = "Layer Mass Weighting"
   dpg@units     = "kg/m2"      ; dp/g, Pa/(m s-2), reduce to kg m-2
+```
 
+g    = 9.80665          ; m/s2
+dpg的单位是   kg/(m*s2)* s2/m =>  kg/m2
+
+```
 ;************************************************
 ; Calculate the MFC_advection term
 ;   MFC_advect = -(u*(dq/dx)+v*(dq/dy) ) 
