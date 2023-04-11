@@ -64,37 +64,4 @@ begin
      end do
   end do
 end
-```
-## python
-有一个叫regionmask的程序包，可以实现该功能。 其函数介绍页面 https://regionmask.readthedocs.io/en/stable/api.html
-```py
-import cmaps, regionmask
-import geopandas as gpd
 
-ds = xr.open_dataset('~/data/t2m.nc')
-var = ds['t2m'] # 三维数组
-
-shp_file = '~/data/gadm36_CHN_0.shp'
-shpf = gpd.read_file(shp_file) 
-mask = regionmask.mask_geopandas(shpf, ds)
-var = var.where(mask==0.0).mean(('lat','lon')) # 虽然var和mask的维数不同，但不影响
-# ds也可以换成var，只要是包含经纬度信息的xarray数据就可以
-# 且默认ds中经纬度名字为lat，lon，若不是，需要指定，此时语法是
-mask = regionmask.mask_geopandas(shpf, ds, 'longitude', 'latitude')
-# 也可以在shpf后直接跟lon和lat数组,且该数组可以是一维或二维，可以是xarray或array
-mask = regionmask.mask_geopandas(shpf, ds['longitude'], ds['latitude'])
-# 无论哪种方法，都只返回一个二维数组xarray.DataArray mask，其中不位于shp_file定义的区域内的格点为nan
-# 由于此处shp_file只定义了一个区域，所以在区域中的格点为0
-# 若shp_file有多个区域，则mask中的值从0-len(区域)
-
-# regionmask中已包含了许多常见的区域划分，可直接调用，不需要使用shapefile
-# natural_earth_v5_0_0.countries_110中包含177个区域，其中China的编号是139
-region = regionmask.defined_regions.natural_earth_v5_0_0.countries_110
-mask = region.mask(var) #输入经纬度信息的方法和返回数组信息同regionmask.mask_geopandas
-var = var.where(mask==139)
-```
-
-## 参考
-- https://zh.m.wikipedia.org/zh-hans/Shapefile  
-- https://www.ncl.ucar.edu/Applications/shapefiles.shtml
-- https://regionmask.readthedocs.io/en/stable/notebooks/geopandas.html
