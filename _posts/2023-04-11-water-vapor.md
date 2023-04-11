@@ -1,9 +1,9 @@
 ---
 layout: post
-title: 水汽方程收支（暂定）
-categories:ncl
-tags: water vapor
-author: nicetynio
+title: 根据行政区划mask数据
+categories: python ncl
+tags: mask
+author: renql
 ---
 
 * content
@@ -306,10 +306,6 @@ end if
 
   plt = gsn_csm_contour_map(wks,VIMFC(nt,:,:) ,res)
 ```
-
-
-
-
 
 shapefile，是美国环境系统研究所公司（ESRI）开发的空间数据开放格式，用于描述几何体对象：点、折线与多边形。可以存储井、河流、湖泊等空间对象的几何位置。除了几何位置，shp文件也可以存储这些空间对象的属性，例如河流的名字、城市的温度等等。
 
